@@ -1,3 +1,7 @@
 query birds {
   birds { id, thumb_url, latin_name }
 }
+
+query bird($id: ID!) {
+  bird(id: $id) { id, image_url, latin_name, notes { id, comment, timestamp } }
+}

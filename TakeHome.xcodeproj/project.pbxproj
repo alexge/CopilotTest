@@ -27,6 +27,8 @@
 		2DB8FA2128AD40FA00DF01CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DB8FA2028AD40FA00DF01CC /* Assets.xcassets */; };
 		2DB8FA2428AD40FA00DF01CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB8FA2228AD40FA00DF01CC /* LaunchScreen.storyboard */; };
 		C1C3F9B52D75FE97004051B5 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = C1C3F9B42D75FE97004051B5 /* AlamofireImage */; };
+		C1C3F9B72D76126C004051B5 /* Note.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9B62D76126C004051B5 /* Note.graphql.swift */; };
+		C1C3F9B92D76127B004051B5 /* BirdQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9B82D76127B004051B5 /* BirdQuery.graphql.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		2DB8FA2028AD40FA00DF01CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DB8FA2328AD40FA00DF01CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2DB8FA2528AD40FA00DF01CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1C3F9B62D76126C004051B5 /* Note.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.graphql.swift; sourceTree = "<group>"; };
+		C1C3F9B82D76127B004051B5 /* BirdQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BirdQuery.graphql.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,7 @@
 		2D09E68C2CCAD8E100F19817 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
+				C1C3F9B82D76127B004051B5 /* BirdQuery.graphql.swift */,
 				2D09E68B2CCAD8E100F19817 /* BirdsQuery.graphql.swift */,
 			);
 			path = Queries;
@@ -110,6 +115,7 @@
 				2D09E6902CCAD8E100F19817 /* Bird.graphql.swift */,
 				2D09E6A22CCADAA800F19817 /* Mutation.graphql.swift */,
 				2D09E6912CCAD8E100F19817 /* Query.graphql.swift */,
+				C1C3F9B62D76126C004051B5 /* Note.graphql.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -248,12 +254,14 @@
 				2D09E6962CCAD8E100F19817 /* SchemaMetadata.graphql.swift in Sources */,
 				2D09E6972CCAD8E100F19817 /* SchemaConfiguration.swift in Sources */,
 				2D09E6A12CCADA6B00F19817 /* AddNoteMutation.graphql.swift in Sources */,
+				C1C3F9B92D76127B004051B5 /* BirdQuery.graphql.swift in Sources */,
 				2D09E6982CCAD8E100F19817 /* Query.graphql.swift in Sources */,
 				2D09E6992CCAD8E100F19817 /* BirdsQuery.graphql.swift in Sources */,
 				2D09E6A52CCADC3C00F19817 /* GraphQLClient.swift in Sources */,
 				2D09E69A2CCAD8E100F19817 /* ID.swift in Sources */,
 				2D09E69B2CCAD8E100F19817 /* Bird.graphql.swift in Sources */,
 				2D09E69C2CCAD8E100F19817 /* GraphQL.graphql.swift in Sources */,
+				C1C3F9B72D76126C004051B5 /* Note.graphql.swift in Sources */,
 				2D09E6A32CCADAA800F19817 /* Mutation.graphql.swift in Sources */,
 				2DB8FA1A28AD40F900DF01CC /* SceneDelegate.swift in Sources */,
 			);

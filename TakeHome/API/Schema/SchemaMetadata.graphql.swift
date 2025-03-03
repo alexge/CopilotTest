@@ -31,6 +31,7 @@ extension GraphQL {
       switch typename {
       case "Query": return GraphQL.Objects.Query
       case "Bird": return GraphQL.Objects.Bird
+      case "Note": return GraphQL.Objects.Note
       case "Mutation": return GraphQL.Objects.Mutation
       default: return nil
       }
