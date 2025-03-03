@@ -8,11 +8,18 @@ class ViewController: UIViewController {
     super.viewDidLoad()
 
     client = createClient(
-      accessToken: "YOUR_ACCESS_TOKEN",
+      accessToken: "E8RTOTpkCq7WzFqqKVtH",
       url: URL(string: "https://takehome.graphql.copilot.money")!
     )
     client.fetch(query: GraphQL.BirdsQuery()) { result in
-      print(result)
+        switch result {
+        case .success(let gqlResult):
+            if let list = gqlResult.data?.birds {
+                print(list)
+            }
+        case .failure(let error):
+            print("failed")
+        }
     }
   }
 }

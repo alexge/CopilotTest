@@ -1,6 +1,24 @@
 {
-  "originHash" : "931440278103ba39b2d835f2c346aeb873ebcb4ff41767ce2ae24e250b359dbe",
+  "originHash" : "d2bf2375ef8dc0a10d90e1b9d36dc69e38fdc71294c27c6d09bea7ea545edbda",
   "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
+        "version" : "5.10.2"
+      }
+    },
+    {
+      "identity" : "alamofireimage#image-downloader",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/AlamofireImage#image-downloader",
+      "state" : {
+        "revision" : "1eaf3b6c6882bed10f6e7b119665599dd2329aa1",
+        "version" : "4.3.0"
+      }
+    },
     {
       "identity" : "apollo-ios",
       "kind" : "remoteSourceControl",

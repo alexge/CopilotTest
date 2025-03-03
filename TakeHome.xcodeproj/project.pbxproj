@@ -26,6 +26,7 @@
 		2DB8FA1C28AD40F900DF01CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB8FA1B28AD40F900DF01CC /* ViewController.swift */; };
 		2DB8FA2128AD40FA00DF01CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DB8FA2028AD40FA00DF01CC /* Assets.xcassets */; };
 		2DB8FA2428AD40FA00DF01CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB8FA2228AD40FA00DF01CC /* LaunchScreen.storyboard */; };
+		C1C3F9B52D75FE97004051B5 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = C1C3F9B42D75FE97004051B5 /* AlamofireImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D09E6842CCAD67500F19817 /* Apollo in Frameworks */,
+				C1C3F9B52D75FE97004051B5 /* AlamofireImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +179,9 @@
 			dependencies = (
 			);
 			name = TakeHome;
+			packageProductDependencies = (
+				C1C3F9B42D75FE97004051B5 /* AlamofireImage */,
+			);
 			productName = TakeHome;
 			productReference = 2DB8FA1428AD40F900DF01CC /* TakeHome.app */;
 			productType = "com.apple.product-type.application";
@@ -207,6 +212,7 @@
 			mainGroup = 2DB8FA0B28AD40F900DF01CC;
 			packageReferences = (
 				2D09E6822CCAD67500F19817 /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				C1C3F9B32D75FE97004051B5 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 			);
 			productRefGroup = 2DB8FA1528AD40F900DF01CC /* Products */;
 			projectDirPath = "";
@@ -459,6 +465,14 @@
 				minimumVersion = 1.15.2;
 			};
 		};
+		C1C3F9B32D75FE97004051B5 /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/AlamofireImage#image-downloader";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -466,6 +480,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2D09E6822CCAD67500F19817 /* XCRemoteSwiftPackageReference "apollo-ios" */;
 			productName = Apollo;
+		};
+		C1C3F9B42D75FE97004051B5 /* AlamofireImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1C3F9B32D75FE97004051B5 /* XCRemoteSwiftPackageReference "AlamofireImage" */;
+			productName = AlamofireImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
