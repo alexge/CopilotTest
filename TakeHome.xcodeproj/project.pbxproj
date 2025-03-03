@@ -29,6 +29,8 @@
 		C1C3F9B52D75FE97004051B5 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = C1C3F9B42D75FE97004051B5 /* AlamofireImage */; };
 		C1C3F9B72D76126C004051B5 /* Note.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9B62D76126C004051B5 /* Note.graphql.swift */; };
 		C1C3F9B92D76127B004051B5 /* BirdQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9B82D76127B004051B5 /* BirdQuery.graphql.swift */; };
+		C1C3F9BC2D761AE4004051B5 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9BB2D761AE4004051B5 /* APIService.swift */; };
+		C1C3F9BE2D76210F004051B5 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9BD2D76210F004051B5 /* ImageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		2DB8FA2528AD40FA00DF01CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1C3F9B62D76126C004051B5 /* Note.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.graphql.swift; sourceTree = "<group>"; };
 		C1C3F9B82D76127B004051B5 /* BirdQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BirdQuery.graphql.swift; sourceTree = "<group>"; };
+		C1C3F9BB2D761AE4004051B5 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		C1C3F9BD2D76210F004051B5 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,15 +162,25 @@
 		2DB8FA1628AD40F900DF01CC /* TakeHome */ = {
 			isa = PBXGroup;
 			children = (
-				2D09E6852CCAD69300F19817 /* API */,
 				2DB8FA1728AD40F900DF01CC /* AppDelegate.swift */,
 				2DB8FA1928AD40F900DF01CC /* SceneDelegate.swift */,
 				2DB8FA1B28AD40F900DF01CC /* ViewController.swift */,
+				C1C3F9BA2D761AC3004051B5 /* Networking */,
+				2D09E6852CCAD69300F19817 /* API */,
 				2DB8FA2028AD40FA00DF01CC /* Assets.xcassets */,
 				2DB8FA2228AD40FA00DF01CC /* LaunchScreen.storyboard */,
 				2DB8FA2528AD40FA00DF01CC /* Info.plist */,
 			);
 			path = TakeHome;
+			sourceTree = "<group>";
+		};
+		C1C3F9BA2D761AC3004051B5 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				C1C3F9BB2D761AE4004051B5 /* APIService.swift */,
+				C1C3F9BD2D76210F004051B5 /* ImageService.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1C3F9BC2D761AE4004051B5 /* APIService.swift in Sources */,
 				2DB8FA1C28AD40F900DF01CC /* ViewController.swift in Sources */,
 				2DB8FA1828AD40F900DF01CC /* AppDelegate.swift in Sources */,
 				2D09E6892CCAD87700F19817 /* birds.graphql in Sources */,
@@ -258,6 +273,7 @@
 				2D09E6982CCAD8E100F19817 /* Query.graphql.swift in Sources */,
 				2D09E6992CCAD8E100F19817 /* BirdsQuery.graphql.swift in Sources */,
 				2D09E6A52CCADC3C00F19817 /* GraphQLClient.swift in Sources */,
+				C1C3F9BE2D76210F004051B5 /* ImageService.swift in Sources */,
 				2D09E69A2CCAD8E100F19817 /* ID.swift in Sources */,
 				2D09E69B2CCAD8E100F19817 /* Bird.graphql.swift in Sources */,
 				2D09E69C2CCAD8E100F19817 /* GraphQL.graphql.swift in Sources */,
