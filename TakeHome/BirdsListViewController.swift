@@ -76,7 +76,10 @@ class BirdsListViewController: UIViewController {
 
 extension BirdsListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let bird = items[indexPath.item]
+        let detail = BirdDetailViewController(id: bird.id, name: bird.name)
+        detail.modalPresentationStyle = .formSheet
+        present(detail, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

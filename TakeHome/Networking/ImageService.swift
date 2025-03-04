@@ -11,14 +11,18 @@ import UIKit
 final class ImageService {
     static let shared = ImageService()
     
-    let session: URLSession
-    let imageCache: AutoPurgingImageCache
+    private let session: URLSession
+    private let imageCache: AutoPurgingImageCache
     
-    var taskDictionary: [String: URLSessionDataTask] = [:]
+    private var taskDictionary: [String: URLSessionDataTask] = [:]
     
-    init(session: URLSession = URLSession.shared, imageCache: AutoPurgingImageCache = AutoPurgingImageCache()) {
+    init(session: URLSession = URLSession.shared, imageCache: AutoPurgingImageCache = AutoPurgingImageCache(memoryCapacity: 300_000_000)) {
         self.session = session
         self.imageCache = imageCache
+    }
+    
+    func image(for key: String) -> UIImage? {
+        return imageCache.image(withIdentifier: key)
     }
     
     func image(for url: URL, key: String, completion: @escaping (Result<UIImage, any Error>) -> Void) {
@@ -77,4 +81,5 @@ final class ImageService {
 enum ImageError: Error {
     case unidentified
     case dataConversion
+    case missingURL
 }

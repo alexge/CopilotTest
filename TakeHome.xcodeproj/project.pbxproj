@@ -35,6 +35,8 @@
 		C1C3F9C32D767772004051B5 /* BirdsListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9C22D767772004051B5 /* BirdsListItem.swift */; };
 		C1C3F9C52D767897004051B5 /* BirdDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9C42D767897004051B5 /* BirdDetailItem.swift */; };
 		C1C3F9C72D7678E3004051B5 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9C62D7678E3004051B5 /* NoteItem.swift */; };
+		C1C3F9C92D7698F6004051B5 /* BirdDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9C82D7698F6004051B5 /* BirdDetailViewController.swift */; };
+		C1C3F9CB2D76A103004051B5 /* BirdDetailNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9CA2D76A103004051B5 /* BirdDetailNoteCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,8 @@
 		C1C3F9C22D767772004051B5 /* BirdsListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdsListItem.swift; sourceTree = "<group>"; };
 		C1C3F9C42D767897004051B5 /* BirdDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetailItem.swift; sourceTree = "<group>"; };
 		C1C3F9C62D7678E3004051B5 /* NoteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
+		C1C3F9C82D7698F6004051B5 /* BirdDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetailViewController.swift; sourceTree = "<group>"; };
+		C1C3F9CA2D76A103004051B5 /* BirdDetailNoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetailNoteCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,8 @@
 				2DB8FA1928AD40F900DF01CC /* SceneDelegate.swift */,
 				2DB8FA1B28AD40F900DF01CC /* BirdsListViewController.swift */,
 				C1C3F9BF2D767642004051B5 /* BirdCollectionViewCell.swift */,
+				C1C3F9C82D7698F6004051B5 /* BirdDetailViewController.swift */,
+				C1C3F9CA2D76A103004051B5 /* BirdDetailNoteCell.swift */,
 				C1C3F9BA2D761AC3004051B5 /* Networking */,
 				2D09E6852CCAD69300F19817 /* API */,
 				2DB8FA2028AD40FA00DF01CC /* Assets.xcassets */,
@@ -287,6 +293,7 @@
 				C1C3F9C32D767772004051B5 /* BirdsListItem.swift in Sources */,
 				C1C3F9C52D767897004051B5 /* BirdDetailItem.swift in Sources */,
 				2DB8FA1C28AD40F900DF01CC /* BirdsListViewController.swift in Sources */,
+				C1C3F9CB2D76A103004051B5 /* BirdDetailNoteCell.swift in Sources */,
 				2DB8FA1828AD40F900DF01CC /* AppDelegate.swift in Sources */,
 				2D09E6892CCAD87700F19817 /* birds.graphql in Sources */,
 				2D09E6962CCAD8E100F19817 /* SchemaMetadata.graphql.swift in Sources */,
@@ -298,6 +305,7 @@
 				2D09E6992CCAD8E100F19817 /* BirdsQuery.graphql.swift in Sources */,
 				2D09E6A52CCADC3C00F19817 /* GraphQLClient.swift in Sources */,
 				C1C3F9BE2D76210F004051B5 /* ImageService.swift in Sources */,
+				C1C3F9C92D7698F6004051B5 /* BirdDetailViewController.swift in Sources */,
 				2D09E69A2CCAD8E100F19817 /* ID.swift in Sources */,
 				2D09E69B2CCAD8E100F19817 /* Bird.graphql.swift in Sources */,
 				2D09E69C2CCAD8E100F19817 /* GraphQL.graphql.swift in Sources */,
