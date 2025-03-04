@@ -21,17 +21,22 @@ final class ImageService {
         let request = URLRequest(url: url)
         let dataTask = session.dataTask(with: request) { [weak self] data, response, error in
             if let data = data {
-                self?.watermarkImage(for: data) { result in
-                    switch result {
-                    case .success(let data):
-                        if let image = UIImage(data: data) {
-                            completion(.success(image))
-                        } else {
-                            completion(.failure(ImageError.dataConversion))
-                        }
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
+//                self?.watermarkImage(for: data) { result in
+//                    switch result {
+//                    case .success(let data):
+//                        if let image = UIImage(data: data) {
+//                            completion(.success(image))
+//                        } else {
+//                            completion(.failure(ImageError.dataConversion))
+//                        }
+//                    case .failure(let error):
+//                        completion(.failure(error))
+//                    }
+//                }
+                if let image = UIImage(data: data) {
+                    completion(.success(image))
+                } else {
+                    completion(.failure(ImageError.dataConversion))
                 }
             } else {
                 completion(.failure(error ?? ImageError.unidentified))
@@ -40,7 +45,7 @@ final class ImageService {
         dataTask.resume()
     }
     
-    func watermarkImage(for imageData: Data, completion: @escaping (Result<Data, any Error>) -> Void) {
+    private func watermarkImage(for imageData: Data, completion: @escaping (Result<Data, any Error>) -> Void) {
         var request = URLRequest(url: URL(string :"https://us-central1-copilot-take-home.cloudfunctions.net/watermark")!)
         request.addValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
         request.addValue(String(imageData.count), forHTTPHeaderField: "Content-Length")
@@ -52,6 +57,7 @@ final class ImageService {
                 completion(.failure(error ?? ImageError.unidentified))
             }
         }
+        dataTask.resume()
     }
 }
 

@@ -31,7 +31,7 @@ final class ApiService: ApiServiceProtocol {
             switch result {
             case .success(let gqlResult):
                 if let data = gqlResult.data {
-                    completion(.success(data.birds.map { BirdsListItem(id: $0.id, name: $0.latin_name, url: URL(string: $0.thumb_url)) }))
+                    completion(.success(data.birds.map { BirdsListItem(id: $0.id, name: $0.latin_name, url: URL(string: $0.image_url)) }))
                 } else {
                     completion(.failure(APIError.missingData))
                 }

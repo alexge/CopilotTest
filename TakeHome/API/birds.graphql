@@ -1,5 +1,5 @@
 query birds {
-  birds { id, thumb_url, latin_name }
+  birds { id, image_url, latin_name }
 }
 
 query bird($id: ID!) {

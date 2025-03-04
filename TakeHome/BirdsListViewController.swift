@@ -45,6 +45,17 @@ class BirdsListViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+        
+        setupSearch()    }
+    
+    private func setupSearch() {
+        let search = UISearchBar()
+        search.placeholder = "Search"
+        search.sizeToFit()
+        navigationItem.titleView = search
+        let micImage = UIImage(systemName: "mic.fill")
+        search.setImage(micImage, for: .bookmark, state: .normal)
+        search.showsBookmarkButton = true
     }
     
     private func loadList() {
