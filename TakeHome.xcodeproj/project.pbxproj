@@ -37,6 +37,7 @@
 		C1C3F9C72D7678E3004051B5 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9C62D7678E3004051B5 /* NoteItem.swift */; };
 		C1C3F9C92D7698F6004051B5 /* BirdDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9C82D7698F6004051B5 /* BirdDetailViewController.swift */; };
 		C1C3F9CB2D76A103004051B5 /* BirdDetailNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9CA2D76A103004051B5 /* BirdDetailNoteCell.swift */; };
+		C1C3F9CD2D76AA88004051B5 /* BirdDetailTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3F9CC2D76AA88004051B5 /* BirdDetailTableHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		C1C3F9C62D7678E3004051B5 /* NoteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
 		C1C3F9C82D7698F6004051B5 /* BirdDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetailViewController.swift; sourceTree = "<group>"; };
 		C1C3F9CA2D76A103004051B5 /* BirdDetailNoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetailNoteCell.swift; sourceTree = "<group>"; };
+		C1C3F9CC2D76AA88004051B5 /* BirdDetailTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetailTableHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 				2DB8FA1B28AD40F900DF01CC /* BirdsListViewController.swift */,
 				C1C3F9BF2D767642004051B5 /* BirdCollectionViewCell.swift */,
 				C1C3F9C82D7698F6004051B5 /* BirdDetailViewController.swift */,
+				C1C3F9CC2D76AA88004051B5 /* BirdDetailTableHeaderView.swift */,
 				C1C3F9CA2D76A103004051B5 /* BirdDetailNoteCell.swift */,
 				C1C3F9BA2D761AC3004051B5 /* Networking */,
 				2D09E6852CCAD69300F19817 /* API */,
@@ -302,6 +305,7 @@
 				2D09E6A12CCADA6B00F19817 /* AddNoteMutation.graphql.swift in Sources */,
 				C1C3F9B92D76127B004051B5 /* BirdQuery.graphql.swift in Sources */,
 				2D09E6982CCAD8E100F19817 /* Query.graphql.swift in Sources */,
+				C1C3F9CD2D76AA88004051B5 /* BirdDetailTableHeaderView.swift in Sources */,
 				2D09E6992CCAD8E100F19817 /* BirdsQuery.graphql.swift in Sources */,
 				2D09E6A52CCADC3C00F19817 /* GraphQLClient.swift in Sources */,
 				C1C3F9BE2D76210F004051B5 /* ImageService.swift in Sources */,

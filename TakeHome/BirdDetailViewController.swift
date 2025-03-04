@@ -93,7 +93,7 @@ class BirdDetailViewController: UIViewController {
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
             imageHeight,
-            containerView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 24),
+            containerView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -140,10 +140,11 @@ class BirdDetailViewController: UIViewController {
 }
 
 extension BirdDetailViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        <#code#>
-//    }
-//    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = BirdDetailTableHeaderView()
+        return header
+    }
+
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        <#code#>
 //    }
