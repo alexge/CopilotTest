@@ -9,15 +9,19 @@ import AlamofireImage
 import UIKit
 
 final class ImageService {
+    static let shared = ImageService()
+    
     let session: URLSession
     let imageCache: AutoPurgingImageCache
+    
+    var taskDictionary: [String: URLSessionDataTask] = [:]
     
     init(session: URLSession = URLSession.shared, imageCache: AutoPurgingImageCache = AutoPurgingImageCache()) {
         self.session = session
         self.imageCache = imageCache
     }
     
-    func image(for url: URL, completion: @escaping (Result<UIImage, any Error>) -> Void) {
+    func image(for url: URL, key: String, completion: @escaping (Result<UIImage, any Error>) -> Void) {
         let request = URLRequest(url: url)
         let dataTask = session.dataTask(with: request) { [weak self] data, response, error in
             if let data = data {
@@ -41,7 +45,9 @@ final class ImageService {
             } else {
                 completion(.failure(error ?? ImageError.unidentified))
             }
+            self?.taskDictionary.removeValue(forKey: key)
         }
+        taskDictionary[key] = dataTask
         dataTask.resume()
     }
     
@@ -58,6 +64,11 @@ final class ImageService {
             }
         }
         dataTask.resume()
+    }
+    
+    func cancelDownload(for key: String) {
+        taskDictionary[key]?.cancel()
+        taskDictionary.removeValue(forKey: key)
     }
 }
 

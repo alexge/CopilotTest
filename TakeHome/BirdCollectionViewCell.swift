@@ -11,7 +11,9 @@ class BirdCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "BirdCollectionViewCell"
     
-    private let service = ImageService()
+    private let service = ImageService.shared
+    
+    private var name: String?
     
     private let image: UIImageView = {
         let image = UIImageView()
@@ -63,22 +65,26 @@ class BirdCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         label.text = nil
         image.image = nil
+        guard let key = name else { return }
+        service.cancelDownload(for: key)
+        name = nil
     }
     
     func bind(_ item: BirdsListItem) {
         label.text = item.name
+        name = item.name
         guard let url = item.url else {
             image.image = UIImage(systemName: "photo")
             return
         }
-        service.image(for: url) { [weak self] result in
-            switch result {
-            case .success(let pic):
-                DispatchQueue.main.async {
+        service.image(for: url, key: item.name) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let pic):
                     self?.image.image = pic
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            case .failure(let error):
-                print(error)
             }
         }
     }
