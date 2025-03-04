@@ -8,11 +8,18 @@
 import UIKit
 
 class BirdDetailViewController: UIViewController {
+    fileprivate struct Config {
+        static let minImageHeight: CGFloat = 150
+        static let maxImageHeight: CGFloat = 320
+        static let ctaHeight: CGFloat = 80
+        static let horizontalMargin: CGFloat = 64
+    }
+    
     private let id: String
     private var bird: BirdDetailItem?
     
     private let apiService: ApiServiceProtocol
-    private let imageService = ImageService.shared
+    private let imageService: ImageServiceProtocol
     
     private let label: UILabel = {
         let label = UILabel()
@@ -42,9 +49,11 @@ class BirdDetailViewController: UIViewController {
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.delegate = self
         tv.dataSource = self
-        tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 84, right: 0)
+        tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Config.ctaHeight + 4, right: 0)
         tv.register(BirdDetailNoteCell.self, forCellReuseIdentifier: "BirdDetailNoteCell")
         tv.showsVerticalScrollIndicator = false
+        tv.allowsSelection = false
+        tv.separatorStyle = .none
         return tv
     }()
     
@@ -55,7 +64,7 @@ class BirdDetailViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.backgroundColor = .blue
-        button.addTarget(self, action: #selector(addNote), for: .touchUpInside)
+        button.addTarget(self, action: #selector(addNoteTapped), for: .touchUpInside)
         return button
     }()
     
@@ -75,9 +84,10 @@ class BirdDetailViewController: UIViewController {
         return spin
     }()
     
-    init(id: String, name: String, service: ApiServiceProtocol = ApiService()) {
+    init(id: String, name: String, service: ApiServiceProtocol = ApiService(), imageService: ImageServiceProtocol = ImageService.shared) {
         self.id = id
         self.apiService = service
+        self.imageService = imageService
         super.init(nibName: nil, bundle: nil)
         
         imageView.image =  imageService.image(for: name)
@@ -104,22 +114,22 @@ class BirdDetailViewController: UIViewController {
         view.addSubview(addButton)
         
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 16),
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
-            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Config.horizontalMargin),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1 * Config.horizontalMargin),
             imageHeight,
-            containerView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
+            containerView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Config.horizontalMargin),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1 * Config.horizontalMargin),
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             tableView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            addButton.heightAnchor.constraint(equalToConstant: 80),
+            addButton.heightAnchor.constraint(equalToConstant: Config.ctaHeight),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -152,7 +162,7 @@ class BirdDetailViewController: UIViewController {
         }
     }
     
-    @objc private func addNote() {
+    @objc private func addNoteTapped() {
         textView.isEditable = true
         containerView.addSubview(textView)
         NSLayoutConstraint.activate([
@@ -167,7 +177,7 @@ class BirdDetailViewController: UIViewController {
     private func animateFullHeader() {
         guard allowImageAnimation else { return }
         allowImageAnimation = false
-        imageHeight.constant = 350
+        imageHeight.constant = Config.maxImageHeight
         UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
             self.view.layoutIfNeeded()
         }, completion: { [weak self] _ in
@@ -178,8 +188,8 @@ class BirdDetailViewController: UIViewController {
     private func animateSmallHeader() {
         guard allowImageAnimation else { return }
         allowImageAnimation = false
-        imageHeight.constant = 150
-        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
+        imageHeight.constant = Config.minImageHeight
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.view.layoutIfNeeded()
         }, completion: { [weak self] _ in
             self?.allowImageAnimation = true
@@ -197,16 +207,16 @@ extension BirdDetailViewController: UITableViewDelegate {
         guard allowImageAnimation else { return }
         if scrollView.contentOffset.y < 0 {
             imageHeight.constant += abs(scrollView.contentOffset.y)
-        } else if scrollView.contentOffset.y > 0 && imageHeight.constant >= 150 {
+        } else if scrollView.contentOffset.y > 0 && imageHeight.constant >= Config.minImageHeight {
             imageHeight.constant -= scrollView.contentOffset.y
-            if imageHeight.constant < 150 {
-                imageHeight.constant = 150
+            if imageHeight.constant < Config.minImageHeight {
+                imageHeight.constant = Config.minImageHeight
             }
         }
     }
     
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        if imageHeight.constant < 350 {
+        if imageHeight.constant < Config.maxImageHeight {
             animateSmallHeader()
         }
     }
@@ -238,7 +248,7 @@ extension BirdDetailViewController: UITableViewDataSource {
 
 extension BirdDetailViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard text == "\n" else { return true }
+        guard text == "\n", !textView.text.isEmpty else { return true }
         textView.resignFirstResponder()
         textView.isEditable = false
         textView.addSubview(spinner)

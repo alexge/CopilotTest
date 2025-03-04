@@ -8,7 +8,13 @@
 import AlamofireImage
 import UIKit
 
-final class ImageService {
+protocol ImageServiceProtocol {
+    func image(for key: String) -> UIImage?
+    func image(for url: URL, key: String, completion: @escaping (Result<UIImage, any Error>) -> Void)
+    func cancelDownload(for key: String)
+}
+
+final class ImageService: ImageServiceProtocol {
     static let shared = ImageService()
     
     private let session: URLSession

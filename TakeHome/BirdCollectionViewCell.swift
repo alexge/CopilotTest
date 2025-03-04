@@ -11,7 +11,7 @@ class BirdCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "BirdCollectionViewCell"
     
-    private let service = ImageService.shared
+    private var service: ImageServiceProtocol?
     
     private var name: String?
     
@@ -66,13 +66,14 @@ class BirdCollectionViewCell: UICollectionViewCell {
         label.text = nil
         image.image = nil
         guard let key = name else { return }
-        service.cancelDownload(for: key)
+        service?.cancelDownload(for: key)
         name = nil
     }
     
-    func bind(_ item: BirdsListItem) {
+    func bind(_ item: BirdsListItem, service: ImageServiceProtocol) {
         label.text = item.name
         name = item.name
+        self.service = service
         guard let url = item.url else {
             image.image = UIImage(systemName: "photo")
             return

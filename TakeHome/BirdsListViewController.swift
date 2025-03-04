@@ -8,8 +8,9 @@
 import UIKit
 
 class BirdsListViewController: UIViewController {
-    let service: ApiServiceProtocol
-    var items: [BirdsListItem] = []
+    private let apiService: ApiServiceProtocol
+    private let imageService: ImageServiceProtocol
+    private var items: [BirdsListItem] = []
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,8 +22,9 @@ class BirdsListViewController: UIViewController {
         return cv
     }()
     
-    init(service: ApiServiceProtocol = ApiService()) {
-        self.service = service
+    init(apiService: ApiServiceProtocol = ApiService(), imageService: ImageServiceProtocol = ImageService.shared) {
+        self.apiService = apiService
+        self.imageService = imageService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,7 +48,8 @@ class BirdsListViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         
-        setupSearch()    }
+        setupSearch()
+    }
     
     private func setupSearch() {
         let search = UISearchBar()
@@ -59,7 +62,7 @@ class BirdsListViewController: UIViewController {
     }
     
     private func loadList() {
-        service.fetchBirdsList { [weak self] result in
+        apiService.fetchBirdsList { [weak self] result in
             switch result {
             case .success(let items):
                 self?.items = items
@@ -105,7 +108,7 @@ extension BirdsListViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BirdCollectionViewCell.reuseIdentifier, for: indexPath) as? BirdCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.bind(items[indexPath.item])
+        cell.bind(items[indexPath.item], service: imageService)
         return cell
     }
 }

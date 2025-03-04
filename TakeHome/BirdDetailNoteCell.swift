@@ -21,7 +21,7 @@ class BirdDetailNoteCell: UITableViewCell {
     private let bubbleBackground: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .lightGray.withAlphaComponent(0.3)
         view.layer.cornerRadius = 8
         return view
     }()
