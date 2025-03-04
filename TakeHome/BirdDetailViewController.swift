@@ -10,7 +10,7 @@ import UIKit
 class BirdDetailViewController: UIViewController {
     private let id: String
     private var bird: BirdDetailItem?
-
+    
     private let apiService: ApiServiceProtocol
     private let imageService = ImageService.shared
     
@@ -29,6 +29,7 @@ class BirdDetailViewController: UIViewController {
     }()
     
     private lazy var imageHeight: NSLayoutConstraint = imageView.heightAnchor.constraint(equalToConstant: 350)
+    private lazy var containerTop: NSLayoutConstraint = containerView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 372)
     
     private let containerView: UIView = {
         let view = UIView()
@@ -41,8 +42,9 @@ class BirdDetailViewController: UIViewController {
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.delegate = self
         tv.dataSource = self
-        tv.contentInset = UIEdgeInsets(top: 0, left: 64, bottom: 84, right: 64)
+        tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 84, right: 0)
         tv.register(BirdDetailNoteCell.self, forCellReuseIdentifier: "BirdDetailNoteCell")
+        tv.showsVerticalScrollIndicator = false
         return tv
     }()
     
@@ -55,6 +57,22 @@ class BirdDetailViewController: UIViewController {
         button.backgroundColor = .blue
         button.addTarget(self, action: #selector(addNote), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var textView: UITextView = {
+        let view = UITextView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isEditable = true
+        view.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        view.delegate = self
+        view.returnKeyType = .done
+        return view
+    }()
+    
+    private let spinner: UIActivityIndicatorView = {
+        let spin = UIActivityIndicatorView(style: .large)
+        spin.translatesAutoresizingMaskIntoConstraints = false
+        return spin
     }()
     
     init(id: String, name: String, service: ApiServiceProtocol = ApiService()) {
@@ -83,7 +101,7 @@ class BirdDetailViewController: UIViewController {
         view.addSubview(imageView)
         view.addSubview(containerView)
         containerView.addSubview(tableView)
-        containerView.addSubview(addButton)
+        view.addSubview(addButton)
         
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -93,18 +111,18 @@ class BirdDetailViewController: UIViewController {
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
             imageHeight,
-            containerView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerTop,
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             tableView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: containerView.topAnchor),
             addButton.heightAnchor.constraint(equalToConstant: 80),
-            addButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            addButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            addButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -135,7 +153,15 @@ class BirdDetailViewController: UIViewController {
     }
     
     @objc private func addNote() {
-        
+        textView.isEditable = true
+        containerView.addSubview(textView)
+        NSLayoutConstraint.activate([
+            textView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            textView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            textView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            textView.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor),
+        ])
+        textView.becomeFirstResponder()
     }
 }
 
@@ -145,9 +171,10 @@ extension BirdDetailViewController: UITableViewDelegate {
         return header
     }
 
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        <#code#>
-//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        imageHeight.constant = max(350 - scrollView.contentOffset.y, 150)
+        containerTop.constant = max(372 - scrollView.contentOffset.y, 172)
+    }
 }
 
 extension BirdDetailViewController: UITableViewDataSource {
@@ -161,5 +188,30 @@ extension BirdDetailViewController: UITableViewDataSource {
         }
         cell.bind(bird?.notes[indexPath.row].comment ?? "")
         return cell
+    }
+}
+
+extension BirdDetailViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard text == "\n" else { return true }
+        textView.resignFirstResponder()
+        textView.isEditable = false
+        textView.addSubview(spinner)
+        spinner.topAnchor.constraint(equalTo: textView.topAnchor, constant: 4).isActive = true
+        spinner.centerXAnchor.constraint(equalTo: textView.centerXAnchor).isActive = true
+        apiService.addNote(textView.text, for: id, timestamp: Int(Date().timeIntervalSince1970)) { [weak self] result in
+            switch result {
+            case .success:
+                self?.fetchDetails(self?.id ?? "")
+            case .failure(let error):
+                print(error)
+            }
+            DispatchQueue.main.async {
+                self?.spinner.removeFromSuperview()
+                self?.textView.removeFromSuperview()
+                self?.textView.text = nil
+            }
+        }
+        return false
     }
 }
