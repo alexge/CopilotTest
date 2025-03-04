@@ -29,7 +29,7 @@ class BirdDetailViewController: UIViewController {
     }()
     
     private lazy var imageHeight: NSLayoutConstraint = imageView.heightAnchor.constraint(equalToConstant: 350)
-    private lazy var containerTop: NSLayoutConstraint = containerView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 372)
+    private var allowImageAnimation = true
     
     private let containerView: UIView = {
         let view = UIView()
@@ -111,7 +111,7 @@ class BirdDetailViewController: UIViewController {
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
             imageHeight,
-            containerTop,
+            containerView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -163,6 +163,28 @@ class BirdDetailViewController: UIViewController {
         ])
         textView.becomeFirstResponder()
     }
+    
+    private func animateFullHeader() {
+        guard allowImageAnimation else { return }
+        allowImageAnimation = false
+        imageHeight.constant = 350
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { [weak self] _ in
+            self?.allowImageAnimation = true
+        })
+    }
+    
+    private func animateSmallHeader() {
+        guard allowImageAnimation else { return }
+        allowImageAnimation = false
+        imageHeight.constant = 150
+        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { [weak self] _ in
+            self?.allowImageAnimation = true
+        })
+    }
 }
 
 extension BirdDetailViewController: UITableViewDelegate {
@@ -172,8 +194,31 @@ extension BirdDetailViewController: UITableViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        imageHeight.constant = max(350 - scrollView.contentOffset.y, 150)
-        containerTop.constant = max(372 - scrollView.contentOffset.y, 172)
+        guard allowImageAnimation else { return }
+        if scrollView.contentOffset.y < 0 {
+            imageHeight.constant += abs(scrollView.contentOffset.y)
+        } else if scrollView.contentOffset.y > 0 && imageHeight.constant >= 150 {
+            imageHeight.constant -= scrollView.contentOffset.y
+            if imageHeight.constant < 150 {
+                imageHeight.constant = 150
+            }
+        }
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        if imageHeight.constant < 350 {
+            animateSmallHeader()
+        }
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        allowImageAnimation = true
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if targetContentOffset.pointee.y <= 0 {
+            animateFullHeader()
+        }
     }
 }
 
@@ -197,6 +242,7 @@ extension BirdDetailViewController: UITextViewDelegate {
         textView.resignFirstResponder()
         textView.isEditable = false
         textView.addSubview(spinner)
+        addButton.isHidden = true
         spinner.topAnchor.constraint(equalTo: textView.topAnchor, constant: 4).isActive = true
         spinner.centerXAnchor.constraint(equalTo: textView.centerXAnchor).isActive = true
         apiService.addNote(textView.text, for: id, timestamp: Int(Date().timeIntervalSince1970)) { [weak self] result in
@@ -210,6 +256,7 @@ extension BirdDetailViewController: UITextViewDelegate {
                 self?.spinner.removeFromSuperview()
                 self?.textView.removeFromSuperview()
                 self?.textView.text = nil
+                self?.addButton.isHidden = false
             }
         }
         return false
