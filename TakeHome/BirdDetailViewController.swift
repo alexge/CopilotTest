@@ -163,6 +163,7 @@ class BirdDetailViewController: UIViewController {
     }
     
     @objc private func addNoteTapped() {
+        animateSmallHeader()
         textView.isEditable = true
         containerView.addSubview(textView)
         NSLayoutConstraint.activate([
